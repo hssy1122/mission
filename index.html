@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MISSION IMPOSSIBLE</title>
+
+    <style type="text/css">
+        body { margin: 0; overflow: hidden; }
+        .circle { position: absolute; left: 0; top: 0; }
+        .bg-black { background-color: black; }
+        .bg-section1 { background: url(map.png); background-size: 100% auto; }
+        .col-1 { height: 1080px; margin: 0px 0px; }
+        #poetText{z-index: 9; position: absolute; left: 300px; top: 100px; font-size:2rem; color: white; line-height: 1.9; font-family: 'NeoDunggeunmoPro-Regular', sans-serif; padding-top: 150px;}
+        #t{z-index: 9; position: absolute; left: 300px; top: 100px; font-size:4rem; color:  line-height: 1.9; font-family: 'NeoDunggeunmoPro-Regular', sans-serif; padding-top: 100px;}
+        .timer {z-index: 9; position: absolute; left: 300px; top: 700px; font-size: 8rem; color: #45FE00; font-family: 'NeoDunggeunmoPro-Regular', sans-serif;}
+        .word{animation: fadein 0.5s forwards; animation-iteration-count: 1;}
+        @keyframes fadein{
+            to{opacity: 1s;}
+        }
+        @font-face {
+            font-family: 'NeoDunggeunmoPro-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+         #image {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        z-index: 999;
+    }
+    </style>
+
+</head>
+<body class="bg-black">
+<div id="poetText"></div>
+<div class="col-1 bg-section1 bg-black"></div>
+<img id="image" src="not.png" style="display: none;">
+
+<script type="text/javascript">
+
+    var poet = "좋은 아침이다.<br> 자네가 체포한 범죄자의 요원들이 여전히 세계 각국에서 파괴 공작을 일삼고 있다.<br> 그들의 목표는 플루토늄이며 동의한다면 이번 미션은 플루토늄 획득을 막는 것이다.<br> 늘 그렇듯, 당신이나 IMF 팀원이 잡히거나 숨질 경우 미국은 관련 여부를 일체 부인 할 것이다.<br> 이 메시지는 5초 뒤 자동 폭파된다.<br>";
+    var poetArr = poet.split(" ");
+    var image = document.getElementById("image");
+
+    function showImageAfterDelay() {
+        setTimeout(function() {
+            image.style.display = "block";
+        }, 28000); 
+    }
+
+    showImageAfterDelay();
+
+    var myTimer = setInterval(print,500);
+    var s=0;
+    function print(){
+        var t= document.createElement("span");
+        t.innerHTML = poetArr[s] + " ";
+        t.className = "word";
+        s++;
+        poetText.appendChild(t);
+
+        if(s == poetArr.length){
+            clearInterval(myTimer);
+            startTimer(); // print 함수가 끝나면 startTimer 함수 호출
+        }
+    }
+
+    function startTimer() {
+        var timerElement = document.createElement("div");
+        timerElement.className = "timer";
+        document.body.appendChild(timerElement);
+        var myVar = setInterval(myFunction, 1000);
+        var a = 0;
+        function myFunction() {
+            var time = new Date();
+            var t = time.getSeconds();
+            timerElement.innerHTML = t;
+            a = a + 1;
+            if (a == 5) {
+                clearInterval(myVar);
+                timerElement.innerHTML = " - ";
+                showImageAfterDelay(); // 15초 후에 이미지를 표시하기 위한 함수 호출
+            }
+        }
+    }
+
+
+    for (var i = 0; i < 20; i++) {
+        var t = document.createElement("img");
+        t.src = "circle.png";
+        t.className = "circle";
+        t.style.width = randomBH(150, 250) + "px";
+        t.style.height = "auto";
+        t.style.left = Math.random() * (screen.availWidth - 300) + "px";
+        t.style.top = Math.random() * (screen.availHeight - 300) + "px";
+        document.body.appendChild(t);
+    }
+
+    function randomBH(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+
+</script>
+
+</body>
+</html>
